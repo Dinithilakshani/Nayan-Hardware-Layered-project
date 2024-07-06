@@ -1,4 +1,4 @@
-package org.example.dto;
+package ik.ijse.HardwareSystem.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
