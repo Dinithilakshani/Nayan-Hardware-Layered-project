@@ -69,7 +69,7 @@ public class TransportDAOimpl implements TransportDAO {
 
     public Boolean save(Transport entity) throws SQLException, ClassNotFoundException {
 
-        return SQLunit.execute("INSERT INTO transportdetails VALUES(?, ?, ?, ?,?)", entity.getVehicalId(), entity.getTid(), entity.getDate(), entity.getTtime(), entity.getTarea());
+        return SQLunit.execute("INSERT INTO transportdetails VALUES(?, ?, ?, ?,?)", entity.getTarea(),entity.getTtime(),entity.getTid(),entity.getVehicalId(),entity.getDate());
     }
 
     public boolean update(Transport entity) throws SQLException, ClassNotFoundException {

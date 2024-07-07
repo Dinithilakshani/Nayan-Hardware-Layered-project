@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
         @Override
         public void start(Stage stage) throws Exception {
-            stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/login.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/Dashboard.fxml"))));
             stage.setTitle("Nayan Hardware");
             stage.centerOnScreen();
             stage.setResizable(false);

@@ -74,7 +74,7 @@ public class SupplierDAOimpl implements SupplierDAO {
 
     public Boolean save(Supplier entity ) throws SQLException, ClassNotFoundException {
 
-            return SQLunit.execute("INSERT INTO supplier VALUES(?, ?, ?, ?)",entity.getSupplierCompany(),entity.getDescription(),entity.getDescription(),entity.getEmailAddress(),entity.getNumber());
+            return SQLunit.execute("INSERT INTO supplier VALUES(?, ?, ?, ?)",entity.getSupplierCompany(),entity.getDescription(),entity.getEmailAddress(),entity.getNumber());
 
         }
 
@@ -88,7 +88,7 @@ public class SupplierDAOimpl implements SupplierDAO {
     public boolean update(Supplier entity) throws SQLException, ClassNotFoundException {
 
 
-            return SQLunit.execute("UPDATE supplier SET SName = ?, emailaddress = ?, contactnumber = ? WHERE SId = ?",entity.getSupplierCompany(),entity.getNumber(),entity.getDescription(),entity.getEmailAddress());
+            return SQLunit.execute("UPDATE supplier SET SName = ?, imeladdress = ?, contactnumber = ? WHERE SId = ?",entity.getSupplierCompany(),entity.getNumber(),entity.getDescription(),entity.getEmailAddress());
 
 
 
