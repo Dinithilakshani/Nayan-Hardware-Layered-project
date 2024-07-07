@@ -11,23 +11,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployeeDAOimpl implements EmployeeDAO {
-    public  Employee searchBy(String id) throws SQLException, ClassNotFoundException {
 
-        ResultSet resultSet = SQLunit.execute("SELECT * FROM employee WHERE  contactnumber=?",id);
+    public Employee searchBy(String id) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = SQLunit.execute("SELECT * FROM employee WHERE eid = ?", id);
 
-        Employee T = null;
-
-
+        Employee employee = null;
         if (resultSet.next()) {
-            String Supplierid = resultSet.getString(3);
-            String Suppliername = resultSet.getString(1);
-            String contact = resultSet.getString(4);
-            String Address = resultSet.getString(2);
-
-
-            T = new Employee(Supplierid, Suppliername, contact, Address);
+            String name = resultSet.getString("name");
+            String address = resultSet.getString("address");
+            String contact = resultSet.getString("contactnumber");
+            employee = new Employee(id, name, address, contact);
         }
-        return T;
+        return employee;
     }
 
     @Override
@@ -35,47 +30,27 @@ public class EmployeeDAOimpl implements EmployeeDAO {
         return null;
     }
 
-
-    public Boolean save(Employee  entity ) throws SQLException, ClassNotFoundException {
-
-            return SQLunit.execute("INSERT INTO Employee VALUES(?, ?, ?,?)",entity.getName(),entity.getId(),entity.getContactnumber(),entity.getAddress());
+    public Boolean save(Employee entity) throws SQLException, ClassNotFoundException {
+        return SQLunit.execute("INSERT INTO Employee VALUES(?, ?, ?, ?)", entity.getId(), entity.getName(), entity.getAddress(), entity.getContactnumber());
     }
-
-
-
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-
-            return SQLunit.execute("DELETE FROM Employee WHERE eid = ?",id);
-
-    }
-
-
 
     public ArrayList<Employee> table() {
-        ArrayList<Employee> Employee = new ArrayList<>();
-
+        ArrayList<Employee> employees = new ArrayList<>();
         try {
-
             ResultSet resultSet = SQLunit.execute("SELECT * from Employee");
             while (resultSet.next()) {
-
-                Employee T = new Employee(
-                        resultSet.getString(4),
-                        resultSet.getString(3),
-                        resultSet.getString(1),
-                        resultSet.getString(2)
-
+                Employee employee = new Employee(
+                        resultSet.getString("eid"),
+                        resultSet.getString("name"),
+                        resultSet.getString("address"),
+                        resultSet.getString("contactnumber")
                 );
-                Employee.add(T);
-
+                employees.add(employee);
             }
-            return Employee;
-
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             throw new RuntimeException(ex);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
+        return employees;
     }
 
     @Override
@@ -85,16 +60,17 @@ public class EmployeeDAOimpl implements EmployeeDAO {
 
     @Override
     public Employee search(String id) throws SQLException, ClassNotFoundException {
-        return null;
+        return searchBy(id);
+    }
+
+    public boolean update(Employee entity) throws SQLException, ClassNotFoundException {
+        return SQLunit.execute("UPDATE employee SET name = ?, address = ?, contactnumber = ? WHERE eid = ?", entity.getName(), entity.getAddress(), entity.getContactnumber(), entity.getId());
+    }
+
+    @Override
+    public int delete(String id) throws SQLException, ClassNotFoundException {
+        return 0;
     }
 
 
-    public boolean update(Employee entity)throws SQLException, ClassNotFoundException  {
-        return SQLunit.execute("UPDATE employee SET contactnumber = ?, address = ?,  name = ? WHERE eid = ?",entity.getName(),entity.getContactnumber(),entity.getAddress(),entity.getId());
-
-    }
 }
-
-
-
-
