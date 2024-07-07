@@ -1,10 +1,10 @@
 package ik.ijse.HardwareSystem.dao.impl;
 
-import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
 import ik.ijse.HardwareSystem.dao.DAO.SupplierDAO;
 import ik.ijse.HardwareSystem.dao.SQLunit;
 import ik.ijse.HardwareSystem.entity.Supplier;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,8 +50,11 @@ public class SupplierDAOimpl implements SupplierDAO {
 
     public  Supplier searchBy(String emailAddress) throws SQLException, ClassNotFoundException{
 
+
+
+
         ResultSet resultSet = SQLunit.execute("SELECT * FROM supplier WHERE  imeladdress=?",emailAddress);
-       Supplier T = null;
+        Supplier supplierDto = null;
 
 
         if (resultSet.next()) {
@@ -61,9 +64,9 @@ public class SupplierDAOimpl implements SupplierDAO {
             String Address = resultSet.getString(2);
 
 
-            T = new Supplier(Supplierid, Suppliername, contact, Address);
+            supplierDto = new Supplier(Supplierid, Suppliername, contact, Address);
         }
-        return T;
+        return supplierDto;
     }
 
     @Override
@@ -72,18 +75,17 @@ public class SupplierDAOimpl implements SupplierDAO {
     }
 
 
-    public Boolean save(Supplier entity ) throws SQLException, ClassNotFoundException {
+    public boolean save(Supplier entity ) throws SQLException, ClassNotFoundException {
 
-            return SQLunit.execute("INSERT INTO supplier VALUES(?, ?, ?, ?)",entity.getSupplierCompany(),entity.getDescription(),entity.getEmailAddress(),entity.getNumber());
+            return SQLunit.execute("INSERT INTO supplier VALUES(?, ?, ?, ?)",entity.getSupplierCompany(),entity.getEmailAddress(),entity.getNumber(),entity.getDescription());
 
         }
 
-
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-
-            return SQLunit.execute("DELETE FROM supplier WHERE SId = ?",id);
-
+    @Override
+    public ArrayList<String> getalls() {
+        return null;
     }
+
 
     public boolean update(Supplier entity) throws SQLException, ClassNotFoundException {
 
@@ -93,5 +95,10 @@ public class SupplierDAOimpl implements SupplierDAO {
 
 
 }
+
+    @Override
+    public int delete(String id) throws SQLException, ClassNotFoundException {
+        return 0;
+    }
 
 }

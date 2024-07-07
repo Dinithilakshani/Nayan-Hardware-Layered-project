@@ -1,6 +1,5 @@
-/*package ik.ijse.HardwareSystem.controller;
+package ik.ijse.HardwareSystem.controller;
 
-import ik.ijse.HardwareSystem.dao.DAO.CustomerDAO;
 import ik.ijse.HardwareSystem.dao.impl.CustomerDAOimpl;
 import ik.ijse.HardwareSystem.dao.impl.ItemDAOimpl;
 import ik.ijse.HardwareSystem.dao.impl.OrdeDAOimpl;
@@ -34,246 +33,246 @@ import java.util.ResourceBundle;
 
 public class OrderFormController implements Initializable {
 
-    @FXML
-    private TableColumn<?, ?> ColAction;
+        @FXML
+        private TableColumn<?, ?> ColAction;
 
-    @FXML
-    private TableColumn<?, ?> ColAmount;
+        @FXML
+        private TableColumn<?, ?> ColAmount;
 
-    @FXML
-    private TableColumn<?, ?> ColOrderId;
+        @FXML
+        private TableColumn<?, ?> ColOrderId;
 
-    @FXML
-    private ComboBox<Integer> ComItemcode;
+        @FXML
+        private ComboBox<Integer> ComItemcode;
 
-    @FXML
-    private Button btnAdd;
+        @FXML
+        private Button btnAdd;
 
-    @FXML
-    private Button btnAddtoCard;
+        @FXML
+        private Button btnAddtoCard;
 
-    @FXML
-    private Button btnPlaceOrder;
+        @FXML
+        private Button btnPlaceOrder;
 
-    @FXML
-    private Button btnPrint;
-
-
-    @FXML
-    private TableColumn<?, ?> colDescription;
-
-    @FXML
-    private TableColumn<?, ?> colOrderdate;
+        @FXML
+        private Button btnPrint;
 
 
-    @FXML
-    private TableColumn<?, ?> colUnitprice;
+        @FXML
+        private TableColumn<?, ?> colDescription;
 
-    @FXML
-    private TableColumn<?, ?> colqty;
+        @FXML
+        private TableColumn<?, ?> colOrderdate;
 
-    @FXML
-    private ComboBox<Customer> comEmail;
+        @FXML
+        private TableColumn<?, ?> colUnitprice;
 
-    @FXML
-    private TableView<Orderdetails> tblOrders;
+        @FXML
+        private TableColumn<?, ?> colqty;
 
-    @FXML
-    private TextField txtDescription;
+        @FXML
+        private ComboBox<String> comEmail;
 
-    @FXML
-    private TextField txtOrderaId;
+        @FXML
+        private TableView<Orderdetails> tblOrders;
 
-    @FXML
-    private TextField txtNetPrice;
+        @FXML
+        private TextField txtDescription;
 
-    @FXML
-    private TextField txtcuustomerId;
+        @FXML
+        private TextField txtOrderaId;
 
+        @FXML
+        private TextField txtNetPrice;
 
-    @FXML
-    private TextField txtQtY;
-
-    @FXML
-    private TextField txtQtyONHENAD;
-
-    @FXML
-    private TextField txtUnitprice;
-
-    @FXML
-    private TextField txtItemcode;
+        @FXML
+        private TextField txtcuustomerId;
 
 
-    @FXML
-    private DatePicker txtdate;
-    OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
-    OrdeDAOimpl ordeDAOimpl = new OrdeDAOimpl();
+        @FXML
+        private TextField txtQtY;
 
-    CustomerDAOimpl customerDAOimpl = new CustomerDAOimpl();
+        @FXML
+        private TextField txtQtyONHENAD;
 
-    ItemDAOimpl itemDAOimpl = new ItemDAOimpl();
-    private CustomerDAO customerDAO;
+        @FXML
+        private TextField txtUnitprice;
 
-    private ObservableList<Orderdetails> observableList = FXCollections.observableArrayList();
-    private double fullTotal = 0;
-
-
-    @FXML
-    void btnAddtoCardOnACtion(ActionEvent event) {
-        String orderId = txtOrderaId.getText();
-        String code = txtItemcode.getText();
-        String description = txtDescription.getText();
-        int qty = Integer.parseInt(txtQtY.getText());
-        double unitPrice = Double.parseDouble(txtUnitprice.getText());
-
-        double amount = (unitPrice * qty);
-
-        Orderdetails orderDto = new Orderdetails(orderId, code, description, unitPrice, qty, (unitPrice * qty));
-        observableList.add(orderDto);
-        tblOrders.setItems(observableList);
-        txtNetPrice.setText(String.valueOf(fullTotal));
-    }
+        @FXML
+        private TextField txtItemcode;
 
 
-    @FXML
-    void btnPlaceOrderOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String orderId = txtOrderaId.getText();
-        String date = String.valueOf(txtdate.getValue());
+        @FXML
+        private DatePicker txtdate;
 
-        String customerId = txtcuustomerId.getText();
+CustomerDAOimpl customerDAOimpl = new CustomerDAOimpl();
+ItemDAOimpl itemDAOimpl =new ItemDAOimpl();
+OrdeDAOimpl ordeDAOimpl = new OrdeDAOimpl();
+OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
+        private ObservableList<Orderdetails> observableList = FXCollections.observableArrayList();
+        private double fullTotal=0;
 
-        double total = 10.0;
 
-        int i = ordeDAOimpl.save(new Order(orderId, date, customerId));
-        if (i > 0) {
-            new Alert(Alert.AlertType.CONFIRMATION, "save Order..!").show();
-        } else {
-            new Alert(Alert.AlertType.CONFIRMATION, "save Order..!").show();
+        @FXML
+        void btnAddtoCardOnACtion(ActionEvent event) {
+            String orderId = txtOrderaId.getText();
+            String code = txtItemcode.getText();
+            String description = txtDescription.getText();
+            int qty = Integer.parseInt(txtQtY.getText());
+            double unitPrice = Double.parseDouble(txtUnitprice.getText());
+
+            double amount = (unitPrice * qty);
+
+            Orderdetails orderDto = new Orderdetails(orderId,code,description,unitPrice,qty,(unitPrice*qty));
+            observableList.add(orderDto);
+            tblOrders.setItems(observableList);
+            txtNetPrice.setText(String.valueOf(fullTotal));
         }
-    }
-
-    @FXML
-    void comEmailOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-
-        Customer customerDto = customerDAOimpl.search(String.valueOf(comEmail.getValue()));
-        txtcuustomerId.setText(customerDto.getName());
-
-    }
-
-    @FXML
-    void comOrderidOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String code = String.valueOf(ComItemcode.getValue());
-
-        Item itemDto = itemDAOimpl.search(code);
-        txtDescription.setText(itemDto.getDesctription());
-        txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
-        txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
 
 
-    }
 
-    @FXML
-    void txtOnKeyRelesed(KeyEvent event) {
+        @FXML
+        void btnPlaceOrderOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+            String orderId = txtOrderaId.getText();
+            String date = String.valueOf(txtdate.getValue());
 
-    }
+            String customerId = txtcuustomerId.getText();
 
-    @FXML
-    void btnPrintOnACtion(ActionEvent event) throws SQLException, JRException {
-        try {
-            InputStream inputStream = getClass().getResourceAsStream("/Report/orders.jrxml");
-            if (inputStream != null) {
-                JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+            double total =10.0;
 
-                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            boolean b = ordeDAOimpl.save(orderId, date, customerId,total,observableList);
+            if (b){
+                new Alert(Alert.AlertType.CONFIRMATION,"save Order..!").show();
+            }else {
+                new Alert(Alert.AlertType.CONFIRMATION,"save Order..!").show();
+            }
+        }
 
-                Map<String, Object> data = new HashMap<>();
-                data.put("Customer Email", comEmail.getValue());
-                data.put("NetTotal", "3000");
+        @FXML
+        void comEmailOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-                Connection connection = DbConnection.getDbConnection().getConnection();
-                if (connection != null) {
-                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, data, connection);
-                    JasperViewer.viewReport(jasperPrint, false);
+            Customer customerDto = customerDAOimpl.search(String.valueOf(comEmail.getValue()));
+            txtcuustomerId.setText(customerDto.getName());
+
+        }
+
+        @FXML
+        void comOrderidOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
+            String code = String.valueOf(ComItemcode.getValue());
+
+            Item itemDto = itemDAOimpl.search(code);
+            txtDescription.setText(itemDto.getDesctription());
+            txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
+            txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
+
+
+        }
+
+        @FXML
+        void txtOnKeyRelesed(KeyEvent event) {
+
+        }
+        @FXML
+        void btnPrintOnACtion(ActionEvent event) throws SQLException, JRException {
+            try {
+                InputStream inputStream = getClass().getResourceAsStream("/Report/orders.jrxml");
+                if (inputStream != null) {
+                    JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+
+                    JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("Customer Email", comEmail.getValue());
+                    data.put("NetTotal", "3000");
+
+                    Connection connection = DbConnection.getDbConnection().getConnection();
+                    if (connection != null) {
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, data, connection);
+                        JasperViewer.viewReport(jasperPrint, false);
+                    } else {
+                        System.err.println("Failed to obtain database connection.");
+                    }
                 } else {
-                    System.err.println("Failed to obtain database connection.");
+                    System.err.println("Failed to load orders.jrxml");
                 }
-            } else {
-                System.err.println("Failed to load orders.jrxml");
+            } catch (JRException e) {
+                e.printStackTrace();
             }
-        } catch (JRException e) {
-            e.printStackTrace();
         }
-    }
 
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setCustomerValues();
-        setItemCOde();
+        public void initialize(URL url, ResourceBundle resourceBundle) {
+            setCustomerValues();
+            setItemCOde();
 
-        ColOrderId.setCellValueFactory(new PropertyValueFactory<>("orderId"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colqty.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        colUnitprice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+            ColOrderId.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+            colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+            colqty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+            colUnitprice.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
-        ColAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-    }
-
-    private void setItemCOde() {
-
-        ArrayList<Item> all = itemDAOimpl.getall();
-        ArrayList<Integer> itemCode = new ArrayList<>();
-
-        for (Item itemDto : all) {
-            itemCode.add(Integer.valueOf(itemDto.getCode()));
+            ColAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         }
-        txtItemcode.setText(FXCollections.observableList(itemCode).toString());
-    }
 
+        private void setItemCOde() {
 
-    private void setCustomerValues() {
+            ArrayList<Item> all = itemDAOimpl.getall();
+            ArrayList<Integer> itemCode = new ArrayList<>();
 
-        ArrayList<Customer> allEmail = customerDAOimpl.getall();
-        comEmail.setItems(FXCollections.observableList(allEmail));
-    }
-
-
-    @FXML
-    void comitemcodeOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String code = String.valueOf(ComItemcode.getValue());
-
-        Item itemDto = itemDAOimpl.search(code);
-        txtDescription.setText(itemDto.getDesctription());
-        txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
-        txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
-        ComItemcode.setValue(Integer.valueOf(itemDto.getCode()));
-    }
-
-
-    public void btnAddOnAction(ActionEvent event) {
-
-    }
-
-
-    public void txtDescriptionOnAction(ActionEvent event) {
-        String code = txtItemcode.getText();
-        try {
-            Item itemDto = itemDAOimpl.searchBy(code);
-
-            if (itemDto != null) {
-
-                txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
-                txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
-                txtItemcode.setText(itemDto.getCode());
-
+            for (Item itemDto  : all) {
+                itemCode.add(Integer.valueOf(itemDto.getCode()));
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            txtItemcode.setText(FXCollections.observableList(itemCode).toString());
         }
 
+
+        private void setCustomerValues() {
+            try {
+                ArrayList<String> allEmail = customerDAOimpl.getalls();
+                comEmail.setItems(FXCollections.observableList(allEmail));
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Handle exceptions appropriately
+            }
+        }
+
+
+
+
+        @FXML
+        void comitemcodeOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
+            String code = String.valueOf(ComItemcode.getValue());
+
+            Item itemDto = itemDAOimpl.search(code);
+            txtDescription.setText(itemDto.getDesctription());
+            txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
+            txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
+            ComItemcode.setValue(Integer.valueOf(itemDto.getCode()));
+        }
+
+
+
+
+
+        public void txtDescriptionOnAction(ActionEvent event) {
+            String  description = txtDescription.getText();
+            try {
+                Item item = itemDAOimpl.searchBy(description);
+
+                if (item != null) {
+
+                    txtUnitprice.setText(String.valueOf(item.getPrice()));
+                    txtQtyONHENAD.setText(String.valueOf(item.getQtyOnHeand()));
+                    txtItemcode.setText(item.getCode());
+
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 
-
-}
-*/
 
 
 

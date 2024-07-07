@@ -14,21 +14,23 @@ import java.util.ArrayList;
 
 public class ItemDAOimpl implements ItemDAO {
 
-    public Item searchBy(String code) throws SQLException, ClassNotFoundException {
+    public Item searchBy(String description) throws SQLException, ClassNotFoundException {
 
 
-        ResultSet resultSet = SQLunit.execute("SELECT * FROM item WHERE  description=?",code);
+        ResultSet resultSet = SQLunit.execute("SELECT * FROM item WHERE  description=?",description);
 
-        Item T = null;
+
+
+        Item itemDto = null;
         if (resultSet.next()) {
-            code = resultSet.getString(1);
+            String code = resultSet.getString(1);
             String descriptions = resultSet.getString(2);
             int qty = resultSet.getInt(4);
             double price = resultSet.getDouble(3);
 
-            T = new Item(code, descriptions, qty, price);
+            itemDto = new Item(code, descriptions, qty, price);
         }
-        return T;
+        return itemDto;
     }
 
     public  ObservableList<XYChart.Series<String, Integer>> getDataToBarChart() throws SQLException, ClassNotFoundException {
@@ -47,16 +49,21 @@ public class ItemDAOimpl implements ItemDAO {
         return datalist;
     }
 
-    public int delete(String id) throws SQLException, ClassNotFoundException {
+    public int delete(String code) throws SQLException, ClassNotFoundException {
 
-        return SQLunit.execute("DELETE FROM item WHERE code = ?",id);
+        return SQLunit.execute("DELETE FROM item WHERE code = ?",code);
 
     }
 
-    public Boolean save(Item entity) throws SQLException, ClassNotFoundException {
+    public boolean save(Item entity) throws SQLException, ClassNotFoundException {
 
             return SQLunit.execute("INSERT INTO item VALUES(?, ?, ?, ?)",entity.getCode(),entity.getDesctription(),entity.getQtyOnHeand(),entity.getPrice());
 
+    }
+
+    @Override
+    public ArrayList<String> getalls() {
+        return null;
     }
 
     public boolean update(Item entity) throws SQLException, ClassNotFoundException {
@@ -67,28 +74,23 @@ public class ItemDAOimpl implements ItemDAO {
         }
 
     public ArrayList<Item> table() {
-        ArrayList<Item> Item = new ArrayList<>();
-
+        ArrayList<Item> items = new ArrayList<>();
         try {
-
-            ResultSet resultSet = SQLunit.execute(" SELECT * from item");
+            ResultSet resultSet = SQLunit.execute("SELECT * from Item");
             while (resultSet.next()) {
+                Item item = new Item(
+                        resultSet.getString("code"),
+                        resultSet.getString("description"),
+                        resultSet.getInt("qtyOnHand"),
+                        resultSet.getDouble("unitPrice")
 
-                Item T = new Item(
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        resultSet.getInt(4),
-                        resultSet.getDouble(3)
-
-                );
-                Item.add(T);
-
+                        );
+                items.add(item);
             }
-            return Item;
-
         } catch (SQLException | ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         }
+        return items;
     }
 
 
@@ -96,9 +98,7 @@ public class ItemDAOimpl implements ItemDAO {
 
 
 
-
-
-public Item search(String code) throws SQLException, ClassNotFoundException {
+    public Item search(String code) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLunit.execute("SELECT * FROM item WHERE  code=?",code);
         Item T = null;

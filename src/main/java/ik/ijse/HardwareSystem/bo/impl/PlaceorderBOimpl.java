@@ -1,4 +1,4 @@
-/*package ik.ijse.HardwareSystem.bo.impl;
+package ik.ijse.HardwareSystem.bo.impl;
 
 import ik.ijse.HardwareSystem.dao.DAO.CustomerDAO;
 import ik.ijse.HardwareSystem.dao.DAO.ItemDAO;
@@ -62,16 +62,7 @@ public class PlaceorderBOimpl {
         }
     }
 
-    public boolean save(OrderDto Dto) throws SQLException, ClassNotFoundException {
 
-        return orderDAO.save(new Order(Dto.getOrderId(), Dto.getCustomerID(),Dto.getDate()));
-    }
-
-    private boolean save(String orderId, ObservableList<OrderdetailsDto> observableList) throws SQLException, ClassNotFoundException {
-        // Implement your save logic for OrderdetailsDto here
-        // Return true if save is successful, otherwise return false
-        return true;
-    }
 
     private boolean updateItemQty(ObservableList<OrderdetailsDto> observableList) throws SQLException, ClassNotFoundException {
         for (OrderdetailsDto dto : observableList) {
@@ -85,4 +76,4 @@ public class PlaceorderBOimpl {
         }
         return true;
     }
-}*/
+}

@@ -82,21 +82,7 @@ public class SupplierFormController implements Initializable {
 
     }
 
-    @FXML
-    void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String id = this.txtid.getText();
 
-
-        int i = supplierDAO.delete(id);
-
-        if(i>0){
-            new Alert(Alert.AlertType.CONFIRMATION,"Delete Supplier").show();
-
-        }else{
-            new Alert(Alert.AlertType.ERROR,"Somthing Error").show();
-        }
-
-    }
 
 
 
@@ -139,13 +125,11 @@ public class SupplierFormController implements Initializable {
         String name = this.txtname.getText();
         String emailaddress = this.txtAddress.getText();
         String contactnumber = this.txtNumber.getText();
-        String sql = "UPDATE Supplier SET SName = ?, emailaddress = ?, contactnumber = ? WHERE SId = ?";
-
 
 
             boolean i = supplierDAO.update(new Supplier(name,emailaddress,contactnumber,eid));
 
-            if(0>1){
+            if(i){
                 new Alert(Alert.AlertType.CONFIRMATION,"Delete Supplier").show();
 
             }else{
@@ -185,10 +169,10 @@ public class SupplierFormController implements Initializable {
     }
     @FXML
     void txtSearchOnAction(ActionEvent event) {
-        String  id = txtid.getText();
+        String  emailAddress = txtAddress.getText();
 
         try {
-            Supplier supplierDto = supplierDAO.searchBy(id);
+            Supplier supplierDto = supplierDAO.searchBy(emailAddress);
 
             if (supplierDto != null) {
                 txtid.setText(supplierDto.getSupplierCompany());

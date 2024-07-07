@@ -81,22 +81,25 @@ public class EmployeeFormController  implements Initializable {
 
     @FXML
     void BtnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String id = this.txtid.getText();
-        String name = this.txtname.getText();
-        String address = this.txtAddress.getText();
-        String tel = this.txtNumber.getText();
 
-        Boolean i = employeeDAO.save(new Employee(id,name,address,tel));
+            String id = this.txtid.getText();
+            String name = this.txtname.getText();
+            String address = this.txtAddress.getText();
+            String tel = this.txtNumber.getText();
 
-        if (i) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Save Employee").show();
+            Boolean isSaved = employeeDAO.save(new Employee(id, name, address, tel));
 
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Somthing Error").show();
+            if (isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Employee Saved Successfully").show();
+                loadTableData();
+                clearFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Error Saving Employee").show();
+            }
         }
-    }
 
-    private void clearFields() {
+
+        private void clearFields() {
         this.txtid.setText("");
         this.txtname.setText("");
         this.txtAddress.setText("");
@@ -112,7 +115,7 @@ public class EmployeeFormController  implements Initializable {
         String contactnumber = this.txtNumber.getText();
 
         boolean i = employeeDAO.update(new Employee(eid,name,address,contactnumber));
-        if (0<1) {
+        if (i) {
             new Alert(Alert.AlertType.CONFIRMATION, "Update Employee").show();
 
         } else {
@@ -123,22 +126,7 @@ public class EmployeeFormController  implements Initializable {
     }
 
 
-    @FXML
-    void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String id = txtid.getText();
 
-        EmployeeDAOimpl employeeDAOimpl = new EmployeeDAOimpl();
-        int i = employeeDAOimpl.delete(id);
-
-        if (i > 0) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Update Employee").show();
-
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Somthing Error").show();
-
-
-        }
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -173,10 +161,10 @@ public class EmployeeFormController  implements Initializable {
 
     @FXML
     void txtsearchOnAction(ActionEvent event) {
-        String  id = txtid.getText();
+        String  contactnumber = txtNumber.getText();
 
         try {
-            Employee employeeDto = employeeDAO.searchBy(id);
+            Employee employeeDto = employeeDAO.searchBy(contactnumber);
 
             if (employeeDto != null) {
                 txtid.setText(employeeDto.getId());

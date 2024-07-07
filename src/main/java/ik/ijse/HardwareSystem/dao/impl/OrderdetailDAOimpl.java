@@ -45,10 +45,15 @@ public class OrderdetailDAOimpl implements OrderdetailDAO {
         return null;
     }
 
-    public Boolean save(Orderdetails entity) throws SQLException, ClassNotFoundException {
+    public boolean save(Orderdetails entity) throws SQLException, ClassNotFoundException {
 
         return SQLunit.execute("insert into order_detail values(?,?,?,?,?)", entity.getCode(), entity.getPrice(), entity.getQty(), entity.getDescription(), entity.getAmount());
 
 
+    }
+
+    @Override
+    public ArrayList<String> getalls() {
+        return null;
     }
 }

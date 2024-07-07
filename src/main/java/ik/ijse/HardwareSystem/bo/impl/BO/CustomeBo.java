@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface CustomeBo extends SuperBO {
-    public CustomerDto searchBy(String contactnumber) throws SQLException, ClassNotFoundException ;
+    public CustomerDto searchBy(String id) throws SQLException, ClassNotFoundException ;
 
 
     public boolean update(Customer dto) throws SQLException, ClassNotFoundException ;

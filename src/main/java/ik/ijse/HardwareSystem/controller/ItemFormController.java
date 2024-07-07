@@ -1,123 +1,3 @@
-/*package lk.ijse.hardwareManagment.Controller;
-
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import lk.ijse.hardwareManagment.db.DbConnection;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-public class ItemFormController {
-
-        @FXML
-        private Button btnClear;
-
-        @FXML
-        private Button btnDelete;
-
-        @FXML
-        private Button btnSave;
-
-        @FXML
-        private Button btnUpdate;
-
-        @FXML
-        private TableColumn<?, ?> colCode;
-
-        @FXML
-        private TableColumn<?, ?> colDescription;
-
-        @FXML
-        private TableColumn<?, ?> colQty;
-
-        @FXML
-        private TableView<?> tblItem;
-
-        @FXML
-        private TextField txtCode;
-
-        @FXML
-        private TextField txtDescription;
-
-
-        @FXML
-        void btnClearOnACtion(ActionEvent event) {
-            this.clearFields()
-
-        }
-
-        private void clearFields() {
-            this.txtid.setText("");
-            this.txtname.setText("");
-            this.txtAddress.setText("");
-            this.txtNumber.setText("");
-        }
-        }
-
-        @FXML
-        void btnDeleteOnAction(ActionEvent event) {
-
-        }
-
-        @FXML
-        void btnSaveOnAction(ActionEvent event) {
-            String id = this.txtid.getText();
-            String name = this.txtname.getText();
-            String address = this.txtAddress.getText();
-            String tel = this.txtNumber.getText();
-            String sql = "INSERT INTO Employee VALUES(?, ?, ?, ?)";
-
-            try {
-                Connection connection = DbConnection.getInstance().getConnection();
-                PreparedStatement pstm = connection.prepareStatement(sql);
-                pstm.setObject(1, id);
-                pstm.setObject(4, name);
-                pstm.setObject(3, address);
-                pstm.setObject(2, tel);
-                boolean isSaved = pstm.executeUpdate() > 0;
-                if (isSaved) {
-                    (new Alert(Alert.AlertType.CONFIRMATION, "Employee saved!", new ButtonType[0])).show();
-                    this.clearFields();
-                }
-            } catch (SQLException var10) {
-                (new Alert(Alert.AlertType.ERROR, var10.getMessage(), new ButtonType[0])).show();
-            }
-
-        }
-
-        }
-
-        @FXML
-        void btnUpdateOnACtion(ActionEvent event) {
-            String eid = this.txtid.getText();
-            String name = this.txtname.getText();
-            String address = this.txtAddress.getText();
-            String contactnumber = this.txtNumber.getText();
-            String sql = "UPDATE Employee SET name = ?, address = ?, contactnumber = ? WHERE eid = ?";
-
-            try {
-                PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
-                pstm.setObject(4, name);
-                pstm.setObject(3, address);
-                pstm.setObject(2, contactnumber);
-                pstm.setObject(1, eid);
-                if (pstm.executeUpdate() > 0) {
-                    (new Alert(Alert.AlertType.CONFIRMATION, "Employee updated!", new ButtonType[0])).show();
-                    this.clearFields();
-                }
-            } catch (SQLException var8) {
-                (new Alert(Alert.AlertType.ERROR, var8.getMessage(), new ButtonType[0])).show();
-            }
-
-        }
-
-
-        }
-
-    }*/
 package ik.ijse.HardwareSystem.controller;
 
 import ik.ijse.HardwareSystem.dao.impl.ItemDAOimpl;
@@ -180,8 +60,7 @@ public class ItemFormController implements Initializable {
     private TextField txtQty;
 
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap();
-    ItemDAOimpl itemDAO = new ItemDAOimpl();
-
+ItemDAOimpl itemDAOimpl = new ItemDAOimpl();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -199,18 +78,11 @@ public class ItemFormController implements Initializable {
 
         map.put(txtQty,patterqty);
     }
+    public void loadTableData() {
 
-
-    private void loadTableData() {
-
-        ArrayList<Item> data = itemDAO.table();
-        tblItem.setItems(FXCollections.observableList( data));
-
-
-
-
+        ArrayList<Item> item = itemDAOimpl.table();
+        tblItem.setItems(FXCollections.observableList(item));
     }
-
 
     @FXML
     void btnClearOnACtion(ActionEvent event) {
@@ -228,11 +100,10 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String id = this.txtCode.getText();
-        String sql = "DELETE FROM item WHERE code = ?";
+        String code = this.txtCode.getText();
 
 
-        int i = itemDAO.delete(id);
+        int i = itemDAOimpl.delete(code);
 
 
         if(i>0){
@@ -251,8 +122,8 @@ public class ItemFormController implements Initializable {
         int qtyOnHeand = Integer.parseInt(this.txtQty.getText());
         double price = Double.parseDouble(this.txtPrice.getText());
 
-        ItemDAOimpl itemDAOimpl = new ItemDAOimpl();
-        Boolean i = itemDAOimpl.save(new Item(code,description,qtyOnHeand,price));
+
+        boolean i = itemDAOimpl.save(new Item(code,description,qtyOnHeand,price));
 
         if(i){
             new Alert(Alert.AlertType.CONFIRMATION,"Save Item").show();
@@ -270,41 +141,48 @@ public class ItemFormController implements Initializable {
         int qty = Integer.parseInt(this.txtQty.getText());
         double  price = Double.parseDouble(this.txtPrice.getText());
 
+        boolean i = itemDAOimpl.update(new Item(code,description,qty,price));
 
-        Boolean i = itemDAO.update(new Item(code,description,qty,price));
-
-        if (0>1) {
+        if (i ) {
             new Alert(Alert.AlertType.CONFIRMATION, "Update Item").show();
 
         } else {
             new Alert(Alert.AlertType.ERROR, "Somthing Error").show();
         }
     }
+    @FXML
+    void txtDescriptionSearchOnaction(ActionEvent event) {
 
-        @FXML
-        void txtSearchOnAction(ActionEvent event) {
-            String  code = txtCode.getText();
+        String  description = txtDescription.getText();
 
-            try {
-                Item itemDto = itemDAO.searchBy(code);
+        try {
+            Item itemDto = itemDAOimpl.searchBy(description);
 
-                if (itemDto != null) {
-                    txtCode.setText(itemDto.getCode());
-                    txtDescription.setText(itemDto.getDesctription());
-                    txtPrice.setText(String.valueOf(itemDto.getPrice()));
-                    txtQty.setText(String.valueOf(itemDto.getQtyOnHeand()));
+            if (itemDto != null) {
+                txtCode.setText(itemDto.getCode());
+                txtDescription.setText(itemDto.getDesctription());
+                txtPrice.setText(String.valueOf(itemDto.getPrice()));
+                txtQty.setText(String.valueOf(itemDto.getQtyOnHeand()));
 
-                }
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
             }
-
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+
+    }
+
+
+
+
+
+
 
     public void txtOnKeyRelesed(KeyEvent keyEvent) {
         ValidateUtil.validation(map);
 
     }
 }
+
+

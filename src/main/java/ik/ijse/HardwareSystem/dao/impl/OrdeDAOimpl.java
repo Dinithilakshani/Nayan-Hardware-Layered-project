@@ -51,10 +51,16 @@ public class OrdeDAOimpl implements OrderDAO  {
 
 
 
-    public Boolean save(Order entity) throws SQLException, ClassNotFoundException {
+    public boolean save(Order entity) throws SQLException, ClassNotFoundException {
         System.out.println(entity);
         return SQLunit.execute("insert into orders values(?,?,?)",entity.getOrderId(),entity.getDate(),entity.getCustomerID());
     }
+
+    @Override
+    public ArrayList<String> getalls() {
+        return null;
+    }
+
 
 }
 

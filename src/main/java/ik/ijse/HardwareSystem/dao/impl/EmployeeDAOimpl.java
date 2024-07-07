@@ -30,8 +30,13 @@ public class EmployeeDAOimpl implements EmployeeDAO {
         return null;
     }
 
-    public Boolean save(Employee entity) throws SQLException, ClassNotFoundException {
-        return SQLunit.execute("INSERT INTO Employee VALUES(?, ?, ?, ?)", entity.getId(), entity.getName(), entity.getAddress(), entity.getContactnumber());
+    public boolean save(Employee entity) throws SQLException, ClassNotFoundException {
+      return SQLunit.execute("INSERT INTO Employee VALUES(?, ?, ?,?)",entity.getAddress(),entity.getName(),entity.getContactnumber(),entity.getId());
+}
+
+    @Override
+    public ArrayList<String> getalls() {
+        return null;
     }
 
     public ArrayList<Employee> table() {

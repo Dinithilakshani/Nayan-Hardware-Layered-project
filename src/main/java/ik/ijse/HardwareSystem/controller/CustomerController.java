@@ -78,21 +78,6 @@ public class CustomerController implements Initializable {
 
     }
 
-    @FXML
-    void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String contactnumber = this.txtNumber.getText();
-
-        int i = customerDAO.delete(contactnumber);
-
-        if (i < 0) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Delete Customer").show();
-
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Somthing Error").show();
-        }
-
-
-    }
 
 
     @FXML
@@ -104,7 +89,7 @@ public class CustomerController implements Initializable {
         String email = this.txtEmail.getText();
 
 
-        Boolean i = customerDAO.save(new Customer(id, name, address, tel, email));
+        boolean i = customerDAO.save(new Customer(id, name, address, tel, email));
 
         if (i ) {
             new Alert(Alert.AlertType.CONFIRMATION, "Save Customer").show();
@@ -131,20 +116,27 @@ public class CustomerController implements Initializable {
     @FXML
     void btnUpdateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        String eid = this.txtId.getText();
-        String name = this.txtName.getText();
-        String address = this.txtAddress.getText();
-        String contactnumber = this.txtNumber.getText();
-        String email = this.txtEmail.getText();
+
+            String eid = this.txtId.getText();
+            String name = this.txtName.getText();
+            String address = this.txtAddress.getText();
+            String contactnumber = this.txtNumber.getText();
+            String email = this.txtEmail.getText();
 
 
-        boolean isUpdated = customerDAO.update(new Customer(eid, name, address, contactnumber, email));
-        if (isUpdated) {
-            new Alert(Alert.AlertType.CONFIRMATION, "customer updated!").show();
+            boolean i = customerDAO.update(new Customer(eid, name, address, contactnumber,email));
+            if (i ) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Update Employee").show();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Somthing Error").show();
+
+
+            }
         }
-    }
 
-    @Override
+
+        @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colNum.setCellValueFactory(new PropertyValueFactory<>("contact"));
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -176,13 +168,13 @@ public class CustomerController implements Initializable {
 
     @FXML
     void txtSearchOnAction(ActionEvent event) {
-        String  id = txtId.getText();
+        String contactnumber  = txtNumber.getText();
 
 
 
        try {
 
-            Customer customerDto = customerDAO.searchBy(id);
+            Customer customerDto = customerDAO.searchBy(contactnumber);
 
             if (customerDto != null) {
                 txtId.setText(customerDto.getId());

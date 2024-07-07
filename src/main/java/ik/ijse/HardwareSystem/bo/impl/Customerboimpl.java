@@ -14,9 +14,9 @@ public class Customerboimpl implements CustomeBo {
     CustomerDAO customerDAO = (CustomerDAOimpl) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.CUSTOMER);
 
 
-    public CustomerDto searchBy(String contactnumber) throws SQLException, ClassNotFoundException {
+    public CustomerDto searchBy(String id) throws SQLException, ClassNotFoundException {
 
-        Customer c = customerDAO.search(contactnumber);
+        Customer c = customerDAO.search(id);
         CustomerDto customer = new CustomerDto(c.getId(),c.getName(),c.getAddress(),c.getContact(),c.getEmail());
         return customer;
     }

@@ -1,11 +1,11 @@
 package ik.ijse.HardwareSystem.dao.impl;
 
 import ik.ijse.HardwareSystem.dao.DAO.TransportDAO;
+import ik.ijse.HardwareSystem.dao.SQLunit;
+import ik.ijse.HardwareSystem.entity.Transport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
-import ik.ijse.HardwareSystem.dao.SQLunit;
-import ik.ijse.HardwareSystem.entity.Transport;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,9 +48,10 @@ public class TransportDAOimpl implements TransportDAO {
 
     public  Transport searchBy(String vehicalid) throws SQLException, ClassNotFoundException {
 
-        ResultSet resultSet = SQLunit.execute("SELECT * FROM transportdetails WHERE  id=?", vehicalid);
 
-        Transport T = null;
+        ResultSet resultSet = SQLunit.execute("SELECT * FROM transportdetails WHERE  id=?",vehicalid);
+
+        Transport transportDeto = null;
 
 
         if (resultSet.next()) {
@@ -61,20 +62,28 @@ public class TransportDAOimpl implements TransportDAO {
             String area = resultSet.getString(1);
 
 
-            T = new Transport(Id, time, date, VId, area);
+            transportDeto = new Transport(Id, time, date, VId, area);
         }
-        return T;
+        return transportDeto;
     }
 
 
-    public Boolean save(Transport entity) throws SQLException, ClassNotFoundException {
+
+
+
+    public boolean save(Transport entity) throws SQLException, ClassNotFoundException {
 
         return SQLunit.execute("INSERT INTO transportdetails VALUES(?, ?, ?, ?,?)", entity.getTarea(),entity.getTtime(),entity.getTid(),entity.getVehicalId(),entity.getDate());
     }
 
+    @Override
+    public ArrayList<String> getalls() {
+        return null;
+    }
+
     public boolean update(Transport entity) throws SQLException, ClassNotFoundException {
 
-            return SQLunit.execute("UPDATE TransportDetails SET  T_area = ?, t_time = ?, T_id =?,T_Date WHERE id = ?",entity.getVehicalId(),entity.getDate(),entity.getTid(),entity.getTtime(),entity.getTarea());
+            return SQLunit.execute("UPDATE transportdetails  SET  T_area = ?, t_time = ?, T_id = ? , T_Date = ?WHERE id = ?",entity.getVehicalId(),entity.getDate(),entity.getTid(),entity.getTtime(),entity.getTarea());
 
     }
 

@@ -13,9 +13,11 @@ import java.util.ArrayList;
 public class CustomerDAOimpl implements CustomerDAO {
     public  Customer searchBy(String contactnumber) throws SQLException, ClassNotFoundException {
 
-        ResultSet resultSet = SQLunit.execute("SELECT * FROM customer WHERE  contactnumber=?");
 
-        Customer T = null;
+        ResultSet resultSet = SQLunit.execute("SELECT * FROM customer WHERE  contactnumber=?",contactnumber);
+
+        Customer customerDto = null;
+
 
         if (resultSet.next()) {
             String customerId = resultSet.getString(2);
@@ -25,18 +27,24 @@ public class CustomerDAOimpl implements CustomerDAO {
             String customerEmail = resultSet.getString(5);
 
 
-            T = new Customer(customerId, customerName, contact, customerAddress, customerEmail);
+            customerDto = new Customer(customerId, customerName, contact, customerAddress, customerEmail);
         }
-        return T;
+        return customerDto;
     }
 
-    @Override
+
+
+
+
+
+
+@Override
     public ObservableList<XYChart.Series<String, Integer>> getDataToBarChart() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     public  boolean update(Customer entity) throws SQLException, ClassNotFoundException {
-        return SQLunit.execute("update customer set name = ?,address = ?,email = ? , contactnumber = ? where id =?",entity.getId(),entity.getAddress(),entity.getEmail(),entity.getAddress());
+        return SQLunit.execute("UPDATE customer SET  name = ?, address = ?, email = ? , contactnumber = ?WHERE id = ?",entity.getId(),entity.getAddress(),entity.getEmail(),entity.getName(),entity.getContact());
 
     }
 
@@ -81,38 +89,35 @@ public class CustomerDAOimpl implements CustomerDAO {
 
            }
 
-
-
     @Override
     public ArrayList<Customer> getall() {
 
-        ArrayList<Customer> allEmail = new ArrayList<>();
-        try {
-            ResultSet resultSet = SQLunit.execute("select email from customer");
-
-            while (resultSet.next()) {
-        new Customer(
-                resultSet.getString(1),
-                resultSet.getString(2),
-                resultSet.getString(3),
-                resultSet.getString(4),
-                resultSet.getString(5)
-
-        );
-            }
-            return allEmail;
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+           return null;
     }
 
 
 
 
+    @Override
+    public ArrayList<String> getalls() {
 
-    public Customer search(String email ) throws SQLException, ClassNotFoundException {
+        ArrayList<String> allEmail = new ArrayList<>();
+        try {
+            ResultSet resultSet = SQLunit.execute("SELECT email FROM customer");
+            while (resultSet.next()) {
+                allEmail.add(resultSet.getString(1));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return allEmail;
+    }
 
-        ResultSet resultSet = SQLunit.execute("SELECT * FROM customer WHERE  email=?",email);
+
+
+    public Customer search(String id ) throws SQLException, ClassNotFoundException {
+
+        ResultSet resultSet = SQLunit.execute("SELECT * FROM customer WHERE  id=?",id);
 
         Customer T = null;
 
@@ -132,8 +137,8 @@ public class CustomerDAOimpl implements CustomerDAO {
 
     }
 
-    public Boolean save(Customer entity) throws SQLException, ClassNotFoundException {
-        return   SQLunit.execute("INSERT INTO customer VALUES(?, ?, ?, ?,?)",entity.getName(),entity.getId(),entity.getAddress(),entity.getEmail(),entity.getContact());
+    public boolean save(Customer entity) throws SQLException, ClassNotFoundException {
+        return   SQLunit.execute("INSERT INTO customer (id,name,address,email,contactnumber ) VALUES(?, ?, ?, ?,?)",entity.getId(),entity.getName(),entity.getAddress(),entity.getEmail(),entity.getContact());
 
     }
 }
