@@ -26,13 +26,10 @@ public class EMployeeBOimpl implements EmployeeBO {
 return employeeDAO.save(entity);
     }
 
-
-
+    @Override
     public int delete(String id) throws SQLException, ClassNotFoundException {
-
-return employeeDAO.delete(id);
+        return 0;
     }
-
 
 
     public ArrayList<Employee> table() {

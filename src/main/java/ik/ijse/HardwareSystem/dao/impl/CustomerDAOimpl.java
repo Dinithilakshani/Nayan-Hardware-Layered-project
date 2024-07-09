@@ -49,12 +49,6 @@ public class CustomerDAOimpl implements CustomerDAO {
     }
 
 
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-
-
-            return SQLunit.execute("DELETE FROM customer WHERE contactnumber = ?",id);
-
-    }
 
 
         public ArrayList<Customer> table() {

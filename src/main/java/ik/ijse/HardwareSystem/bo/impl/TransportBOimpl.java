@@ -44,9 +44,7 @@ public class TransportBOimpl {
         return transportDAO.update(entity);
     }
 
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-        return transportDAO.delete(id);
-    }
+
 
     public ObservableList<XYChart.Series<String, Integer>> getDataToBarChart() throws SQLException, ClassNotFoundException {
         return transportDAO.getDataToBarChart();

@@ -14,4 +14,5 @@ public class OrderDto {
     private String orderId;
     private String date;
     private String customerID;
+    private  double amount;
 }

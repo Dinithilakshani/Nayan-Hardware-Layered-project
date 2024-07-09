@@ -40,10 +40,7 @@ return supplierDAO.save(entity);
     }
 
 
-    public int delete(String id) throws SQLException, ClassNotFoundException {
 
-return supplierDAO.delete(id);
-    }
 
     public boolean update(Supplier entity) throws SQLException, ClassNotFoundException {
 

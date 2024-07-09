@@ -96,9 +96,6 @@ public class SupplierDAOimpl implements SupplierDAO {
 
 }
 
-    @Override
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-        return 0;
-    }
+
 
 }

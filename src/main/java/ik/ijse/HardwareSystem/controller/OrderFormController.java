@@ -1,13 +1,10 @@
 package ik.ijse.HardwareSystem.controller;
 
-import ik.ijse.HardwareSystem.dao.impl.CustomerDAOimpl;
-import ik.ijse.HardwareSystem.dao.impl.ItemDAOimpl;
-import ik.ijse.HardwareSystem.dao.impl.OrdeDAOimpl;
-import ik.ijse.HardwareSystem.dao.impl.OrderdetailDAOimpl;
+import ik.ijse.HardwareSystem.bo.impl.BO.PlaceorderBO;
+import ik.ijse.HardwareSystem.bo.impl.PlaceorderBOimpl;
 import ik.ijse.HardwareSystem.db.DbConnection;
 import ik.ijse.HardwareSystem.entity.Customer;
 import ik.ijse.HardwareSystem.entity.Item;
-import ik.ijse.HardwareSystem.entity.Order;
 import ik.ijse.HardwareSystem.entity.Orderdetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -105,10 +102,11 @@ public class OrderFormController implements Initializable {
         @FXML
         private DatePicker txtdate;
 
-CustomerDAOimpl customerDAOimpl = new CustomerDAOimpl();
+/*CustomerDAOimpl customerDAOimpl = new CustomerDAOimpl();
 ItemDAOimpl itemDAOimpl =new ItemDAOimpl();
 OrdeDAOimpl ordeDAOimpl = new OrdeDAOimpl();
-OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
+OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();*/
+    PlaceorderBO placeorderBO = new PlaceorderBOimpl();
         private ObservableList<Orderdetails> observableList = FXCollections.observableArrayList();
         private double fullTotal=0;
 
@@ -124,6 +122,8 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
             double amount = (unitPrice * qty);
 
             Orderdetails orderDto = new Orderdetails(orderId,code,description,unitPrice,qty,(unitPrice*qty));
+
+
             observableList.add(orderDto);
             tblOrders.setItems(observableList);
             txtNetPrice.setText(String.valueOf(fullTotal));
@@ -132,15 +132,19 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
 
 
         @FXML
-        void btnPlaceOrderOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+       void btnPlaceOrderOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
             String orderId = txtOrderaId.getText();
             String date = String.valueOf(txtdate.getValue());
 
             String customerId = txtcuustomerId.getText();
 
-            double total =10.0;
+            double amount =10.0;
+            Orderdetails orderdetails = null;
+            for (Orderdetails o:observableList){
+                 orderdetails = new Orderdetails(o.getOrderId(),o.getCode(),o.getDescription(),o.getPrice(),o.getQty(),o.getAmount());
+            }
 
-            boolean b = ordeDAOimpl.save(orderId, date, customerId,total,observableList);
+            boolean b = placeorderBO.saveOrder(orderId,date,customerId,amount,orderdetails,observableList);
             if (b){
                 new Alert(Alert.AlertType.CONFIRMATION,"save Order..!").show();
             }else {
@@ -151,7 +155,7 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
         @FXML
         void comEmailOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-            Customer customerDto = customerDAOimpl.search(String.valueOf(comEmail.getValue()));
+            Customer customerDto = placeorderBO.search(String.valueOf(comEmail.getValue()));
             txtcuustomerId.setText(customerDto.getName());
 
         }
@@ -160,7 +164,7 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
         void comOrderidOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
             String code = String.valueOf(ComItemcode.getValue());
 
-            Item itemDto = itemDAOimpl.search(code);
+            Item itemDto = placeorderBO.search(code);
             txtDescription.setText(itemDto.getDesctription());
             txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
             txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
@@ -214,7 +218,7 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
 
         private void setItemCOde() {
 
-            ArrayList<Item> all = itemDAOimpl.getall();
+            ArrayList<Item> all = placeorderBO.getall();
             ArrayList<Integer> itemCode = new ArrayList<>();
 
             for (Item itemDto  : all) {
@@ -226,7 +230,7 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
 
         private void setCustomerValues() {
             try {
-                ArrayList<String> allEmail = customerDAOimpl.getalls();
+                ArrayList<String> allEmail = placeorderBO.getalls();
                 comEmail.setItems(FXCollections.observableList(allEmail));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -241,7 +245,7 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
         void comitemcodeOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
             String code = String.valueOf(ComItemcode.getValue());
 
-            Item itemDto = itemDAOimpl.search(code);
+            Item itemDto = placeorderBO.search(code);
             txtDescription.setText(itemDto.getDesctription());
             txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
             txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
@@ -254,20 +258,14 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();
 
         public void txtDescriptionOnAction(ActionEvent event) {
             String  description = txtDescription.getText();
-            try {
-                Item item = itemDAOimpl.searchBy(description);
+            Item item = placeorderBO.searchBy(description);
 
-                if (item != null) {
+            if (item != null) {
 
-                    txtUnitprice.setText(String.valueOf(item.getPrice()));
-                    txtQtyONHENAD.setText(String.valueOf(item.getQtyOnHeand()));
-                    txtItemcode.setText(item.getCode());
+                txtUnitprice.setText(String.valueOf(item.getPrice()));
+                txtQtyONHENAD.setText(String.valueOf(item.getQtyOnHeand()));
+                txtItemcode.setText(item.getCode());
 
-                }
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
             }
 
         }

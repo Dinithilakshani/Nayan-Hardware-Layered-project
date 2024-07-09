@@ -87,10 +87,7 @@ public class TransportDAOimpl implements TransportDAO {
 
     }
 
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-            return SQLunit.execute("DELETE FROM tansportDetails WHERE id = ?",id);
 
-    }
 
     public  ObservableList<XYChart.Series<String, Integer>> getDataToBarChart() throws SQLException, ClassNotFoundException {
         ObservableList<XYChart.Series<String, Integer>> datalist = FXCollections.observableArrayList();

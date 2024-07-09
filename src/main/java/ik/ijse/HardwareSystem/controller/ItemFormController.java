@@ -98,22 +98,8 @@ ItemDAOimpl itemDAOimpl = new ItemDAOimpl();
     }
 
 
-    @FXML
-    void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String code = this.txtCode.getText();
 
 
-        int i = itemDAOimpl.delete(code);
-
-
-        if(i>0){
-            new Alert(Alert.AlertType.CONFIRMATION,"Delete Item").show();
-
-        }else{
-            new Alert(Alert.AlertType.ERROR,"Somthing Error").show();
-        }
-
-    }
 
     @FXML
     void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -136,7 +122,10 @@ ItemDAOimpl itemDAOimpl = new ItemDAOimpl();
 
     @FXML
     void btnUpdateOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String code = this.txtCode.getText();
+
+          String code = this.txtCode.getText();
+
+
         String description = this.txtDescription.getText();
         int qty = Integer.parseInt(this.txtQty.getText());
         double  price = Double.parseDouble(this.txtPrice.getText());

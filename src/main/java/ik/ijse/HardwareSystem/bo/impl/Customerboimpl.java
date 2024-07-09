@@ -26,9 +26,9 @@ public class Customerboimpl implements CustomeBo {
         return customerDAO.update(new Customer(dto.getId(), dto.getName(), dto.getAddress(), dto.getContact(), dto.getEmail()));
     }
 
-
+    @Override
     public int delete(String id) throws SQLException, ClassNotFoundException {
-        return customerDAO.delete(id);
+        return 0;
     }
 
 

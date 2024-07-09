@@ -28,10 +28,7 @@ public class ItemBOimpl {
         return itemDAO.getDataToBarChart();
     }
 
-    public int delete(String id) throws SQLException, ClassNotFoundException {
 
-        return itemDAO.delete(id);
-    }
 
     public boolean save(Item entity) throws SQLException, ClassNotFoundException {
 

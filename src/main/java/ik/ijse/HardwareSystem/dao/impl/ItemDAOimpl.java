@@ -49,11 +49,6 @@ public class ItemDAOimpl implements ItemDAO {
         return datalist;
     }
 
-    public int delete(String code) throws SQLException, ClassNotFoundException {
-
-        return SQLunit.execute("DELETE FROM item WHERE code = ?",code);
-
-    }
 
     public boolean save(Item entity) throws SQLException, ClassNotFoundException {
 

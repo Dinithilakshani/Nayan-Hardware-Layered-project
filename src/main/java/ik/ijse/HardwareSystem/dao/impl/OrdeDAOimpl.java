@@ -29,10 +29,7 @@ public class OrdeDAOimpl implements OrderDAO  {
         return false;
     }
 
-    @Override
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-        return 0;
-    }
+
 
     @Override
     public ArrayList<Order> table() {
@@ -60,6 +57,8 @@ public class OrdeDAOimpl implements OrderDAO  {
     public ArrayList<String> getalls() {
         return null;
     }
+
+
 
 
 }

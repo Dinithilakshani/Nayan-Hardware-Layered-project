@@ -1,10 +1,10 @@
 package ik.ijse.HardwareSystem.dao.impl;
 
 import ik.ijse.HardwareSystem.dao.DAO.OrderdetailDAO;
-import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
 import ik.ijse.HardwareSystem.dao.SQLunit;
 import ik.ijse.HardwareSystem.entity.Orderdetails;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,10 +25,7 @@ public class OrderdetailDAOimpl implements OrderdetailDAO {
         return false;
     }
 
-    @Override
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-        return 0;
-    }
+
 
     @Override
     public ArrayList<Orderdetails> table() {
@@ -45,15 +42,21 @@ public class OrderdetailDAOimpl implements OrderdetailDAO {
         return null;
     }
 
+    @Override
     public boolean save(Orderdetails entity) throws SQLException, ClassNotFoundException {
 
-        return SQLunit.execute("insert into order_detail values(?,?,?,?,?)", entity.getCode(), entity.getPrice(), entity.getQty(), entity.getDescription(), entity.getAmount());
-
-
+        return false;
     }
+
+
 
     @Override
     public ArrayList<String> getalls() {
         return null;
+    }
+
+    @Override
+    public boolean saves( Orderdetails orderdetails) throws SQLException, ClassNotFoundException {
+        return SQLunit.execute("insert into order_detail (orderId,description,qty,unitprice,amount) values(?,?,?,?,?)",orderdetails.getOrderId(),orderdetails.getDescription(),orderdetails.getQty(),orderdetails.getPrice(),orderdetails.getAmount());
     }
 }

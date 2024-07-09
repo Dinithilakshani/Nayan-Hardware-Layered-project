@@ -72,10 +72,7 @@ public class EmployeeDAOimpl implements EmployeeDAO {
         return SQLunit.execute("UPDATE employee SET name = ?, address = ?, contactnumber = ? WHERE eid = ?", entity.getName(), entity.getAddress(), entity.getContactnumber(), entity.getId());
     }
 
-    @Override
-    public int delete(String id) throws SQLException, ClassNotFoundException {
-        return 0;
-    }
+
 
 
 }
