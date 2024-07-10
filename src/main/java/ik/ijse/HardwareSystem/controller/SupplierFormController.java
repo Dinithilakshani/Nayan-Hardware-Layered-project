@@ -145,7 +145,7 @@ public class SupplierFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("EmailAddress"));
         colNum.setCellValueFactory(new PropertyValueFactory<>("Number"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("Number"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colCompany.setCellValueFactory(new PropertyValueFactory<>("SupplierCompany"));
 
 

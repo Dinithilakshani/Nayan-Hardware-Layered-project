@@ -2,6 +2,7 @@ package ik.ijse.HardwareSystem.dao.impl;
 
 import ik.ijse.HardwareSystem.dao.DAO.OrderdetailDAO;
 import ik.ijse.HardwareSystem.dao.SQLunit;
+import ik.ijse.HardwareSystem.entity.Item;
 import ik.ijse.HardwareSystem.entity.Orderdetails;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
@@ -52,6 +53,11 @@ public class OrderdetailDAOimpl implements OrderdetailDAO {
 
     @Override
     public ArrayList<String> getalls() {
+        return null;
+    }
+
+    @Override
+    public Item itemsearch(String code) throws SQLException, ClassNotFoundException {
         return null;
     }
 

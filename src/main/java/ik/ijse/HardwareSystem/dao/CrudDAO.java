@@ -1,5 +1,6 @@
 package ik.ijse.HardwareSystem.dao;
 
+import ik.ijse.HardwareSystem.entity.Item;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 
@@ -18,6 +19,7 @@ public interface CrudDAO <T> extends SuperDAO {
     public boolean save(T entity) throws SQLException, ClassNotFoundException;
 
     public ArrayList<String> getalls();
+    public Item itemsearch(String code) throws SQLException, ClassNotFoundException ;
 
 
 

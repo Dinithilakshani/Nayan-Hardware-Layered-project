@@ -68,9 +68,9 @@
       <TableView fx:id="tblEmployee" layoutX="49.0" layoutY="492.0" prefHeight="307.0" prefWidth="932.0">
          <columns>
             <TableColumn fx:id="colName" prefWidth="154.39999389648438" text="Employee name" />
-            <TableColumn fx:id="colId" prefWidth="179.199951171875" text="Employee Id" />
+            <TableColumn fx:id="colId" prefWidth="179.199951171875" text="ContactNumber" />
             <TableColumn fx:id="colAdresss" prefWidth="321.5999755859375" text="Employee Address" />
-            <TableColumn fx:id="colNumber" prefWidth="267.199951171875" text="Contactnumber" />
+            <TableColumn fx:id="colNumber" prefWidth="267.199951171875" text="ID" />
          </columns>
       </TableView>
       <ImageView fitHeight="24.0" fitWidth="34.0" layoutX="868.0" layoutY="413.0">

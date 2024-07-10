@@ -113,10 +113,11 @@ ItemDAOimpl itemDAOimpl = new ItemDAOimpl();
 
         if(i){
             new Alert(Alert.AlertType.CONFIRMATION,"Save Item").show();
-
+            loadTableData();
         }else{
             new Alert(Alert.AlertType.ERROR,"Somthing Error").show();
         }
+
     }
 
 
@@ -134,7 +135,7 @@ ItemDAOimpl itemDAOimpl = new ItemDAOimpl();
 
         if (i ) {
             new Alert(Alert.AlertType.CONFIRMATION, "Update Item").show();
-
+            loadTableData();
         } else {
             new Alert(Alert.AlertType.ERROR, "Somthing Error").show();
         }

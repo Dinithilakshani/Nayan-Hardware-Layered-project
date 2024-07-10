@@ -164,7 +164,7 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();*/
         void comOrderidOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
             String code = String.valueOf(ComItemcode.getValue());
 
-            Item itemDto = placeorderBO.search(code);
+            Item itemDto = placeorderBO.itemsearch(code);
             txtDescription.setText(itemDto.getDesctription());
             txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
             txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
@@ -245,7 +245,7 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();*/
         void comitemcodeOnACtion(ActionEvent event) throws SQLException, ClassNotFoundException {
             String code = String.valueOf(ComItemcode.getValue());
 
-            Item itemDto = placeorderBO.search(code);
+            Item itemDto = placeorderBO.itemsearch(code);
             txtDescription.setText(itemDto.getDesctription());
             txtUnitprice.setText(String.valueOf(itemDto.getPrice()));
             txtQtyONHENAD.setText(String.valueOf(itemDto.getQtyOnHeand()));
@@ -256,7 +256,7 @@ OrderdetailDAOimpl orderdetailDAOimpl = new OrderdetailDAOimpl();*/
 
 
 
-        public void txtDescriptionOnAction(ActionEvent event) {
+        public void txtDescriptionOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
             String  description = txtDescription.getText();
             Item item = placeorderBO.searchBy(description);
 

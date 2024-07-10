@@ -93,7 +93,7 @@ public class ItemDAOimpl implements ItemDAO {
 
 
 
-    public Item search(String code) throws SQLException, ClassNotFoundException {
+    public Item itemsearch(String code) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLunit.execute("SELECT * FROM item WHERE  code=?",code);
         Item T = null;
@@ -136,13 +136,10 @@ public class ItemDAOimpl implements ItemDAO {
         }
     }
 
-
-
-
-
-
-
-
+    @Override
+    public Item search(String id) throws SQLException, ClassNotFoundException {
+        return null;
+    }
 
 
 }

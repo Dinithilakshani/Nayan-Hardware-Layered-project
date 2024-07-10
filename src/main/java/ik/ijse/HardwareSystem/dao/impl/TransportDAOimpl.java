@@ -2,6 +2,7 @@ package ik.ijse.HardwareSystem.dao.impl;
 
 import ik.ijse.HardwareSystem.dao.DAO.TransportDAO;
 import ik.ijse.HardwareSystem.dao.SQLunit;
+import ik.ijse.HardwareSystem.entity.Item;
 import ik.ijse.HardwareSystem.entity.Transport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,6 +79,11 @@ public class TransportDAOimpl implements TransportDAO {
 
     @Override
     public ArrayList<String> getalls() {
+        return null;
+    }
+
+    @Override
+    public Item itemsearch(String code) throws SQLException, ClassNotFoundException {
         return null;
     }
 

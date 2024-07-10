@@ -81,28 +81,30 @@ Order order = new Order(orderId, date,customerId,amount);
         return true;
     }
 
-    @Override
-    public ArrayList<String> getalls() {
-        return null;
-    }
-
-    @Override
     public ArrayList<Item> getall() {
-        return null;
+        return itemDAO.getall();
     }
 
-    @Override
-    public Item search(String code) {
-        return null;
+
+
+
+    public ArrayList<String> getalls() {
+        return customerDAO.getalls();
     }
 
-    @Override
-    public Item searchBy(String description) {
-        return null;
+
+
+    public Item itemsearch(String code) throws SQLException, ClassNotFoundException {
+     return    itemDAO.itemsearch(code);
     }
 
-    @Override
-    public Customer searchs(String s) {
-        return null;
+
+    public Item searchBy(String description) throws SQLException, ClassNotFoundException {
+       return itemDAO.searchBy(description);
     }
-}
+    public Customer search(String id ) throws SQLException, ClassNotFoundException {
+        return customerDAO.search(id);
+    }
+
+
+    }

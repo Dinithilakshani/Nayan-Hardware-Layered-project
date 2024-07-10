@@ -2,6 +2,7 @@ package ik.ijse.HardwareSystem.dao.impl;
 
 import ik.ijse.HardwareSystem.dao.DAO.SupplierDAO;
 import ik.ijse.HardwareSystem.dao.SQLunit;
+import ik.ijse.HardwareSystem.entity.Item;
 import ik.ijse.HardwareSystem.entity.Supplier;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
@@ -77,12 +78,17 @@ public class SupplierDAOimpl implements SupplierDAO {
 
     public boolean save(Supplier entity ) throws SQLException, ClassNotFoundException {
 
-            return SQLunit.execute("INSERT INTO supplier VALUES(?, ?, ?, ?)",entity.getSupplierCompany(),entity.getEmailAddress(),entity.getNumber(),entity.getDescription());
+            return SQLunit.execute("INSERT INTO supplier  VALUES(?, ?, ?, ?)",entity.getSupplierCompany(),entity.getEmailAddress(),entity.getNumber(),entity.getDescription());
 
         }
 
     @Override
     public ArrayList<String> getalls() {
+        return null;
+    }
+
+    @Override
+    public Item itemsearch(String code) throws SQLException, ClassNotFoundException {
         return null;
     }
 

@@ -3,6 +3,7 @@ package ik.ijse.HardwareSystem.dao.impl;
 import ik.ijse.HardwareSystem.dao.DAO.CustomerDAO;
 import ik.ijse.HardwareSystem.dao.SQLunit;
 import ik.ijse.HardwareSystem.entity.Customer;
+import ik.ijse.HardwareSystem.entity.Item;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 
@@ -107,6 +108,10 @@ public class CustomerDAOimpl implements CustomerDAO {
         return allEmail;
     }
 
+    @Override
+    public Item itemsearch(String code) throws SQLException, ClassNotFoundException {
+        return null;
+    }
 
 
     public Customer search(String id ) throws SQLException, ClassNotFoundException {

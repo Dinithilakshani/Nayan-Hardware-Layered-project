@@ -1,5 +1,6 @@
 package ik.ijse.HardwareSystem.dao.impl;
 
+import ik.ijse.HardwareSystem.entity.Item;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import ik.ijse.HardwareSystem.dao.DAO.EmployeeDAO;
@@ -39,6 +40,11 @@ public class EmployeeDAOimpl implements EmployeeDAO {
         return null;
     }
 
+    @Override
+    public Item itemsearch(String code) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
     public ArrayList<Employee> table() {
         ArrayList<Employee> employees = new ArrayList<>();
         try {
@@ -71,7 +77,6 @@ public class EmployeeDAOimpl implements EmployeeDAO {
     public boolean update(Employee entity) throws SQLException, ClassNotFoundException {
         return SQLunit.execute("UPDATE employee SET name = ?, address = ?, contactnumber = ? WHERE eid = ?", entity.getName(), entity.getAddress(), entity.getContactnumber(), entity.getId());
     }
-
 
 
 
